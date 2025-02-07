@@ -323,6 +323,9 @@ def process_subtasks():
             )
             send_teams_notification(message)
             send_google_chat_notification(message)
+            return False
+
+    return True
 
 
 def format_google_chat_notification(log_entry: Dict[str, Any]) -> Dict[str, Any]:
@@ -462,14 +465,24 @@ def main(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     except RuntimeError as e:
         return {"statusCode": 401, "body": json.dumps({"message": str(e)})}
 
-    process_subtasks()
-
-    return {
-        "statusCode": 200,
-        "body": json.dumps(
-            {
-                "message": "All subtasks processed with notifications sent for failures.",
-                "dsr_id": data_dsr["ticketId"],
-            }
-        ),
-    }
+    result = process_subtasks()
+    if result:
+        return {
+            "statusCode": 200,
+            "body": json.dumps(
+                {
+                    "message": "All subtasks processed with notifications sent for failures.",
+                    "dsr_id": data_dsr["ticketId"],
+                }
+            ),
+        }
+    else:
+        return {
+            "statusCode": 500,
+            "body": json.dumps(
+                {
+                    "message": "Failed to process the DSR. Notifications sent.",
+                    "dsr_id": data_dsr["ticketId"],
+                }
+            ),
+        }

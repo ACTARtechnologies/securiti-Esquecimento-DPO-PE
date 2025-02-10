@@ -142,7 +142,7 @@ def format_teams_notification(log_entry: Dict[str, Any]) -> Dict[str, Any]:
                         {
                             "type": "Action.OpenUrl",
                             "title": "Visualizar na Securiti",
-                            "url": f"https://app.securiti.ai/#/ticket-details/{log_entry['ticket_id']}?tab=WORKLIST",
+                            "url": f"{GLOBAL_SECURITI_URL}/#/ticket-details/{log_entry['ticket_id']}?tab=WORKLIST",
                         }
                     ],
                 },
@@ -331,7 +331,7 @@ def process_subtasks():
 def format_google_chat_notification(log_entry: Dict[str, Any]) -> Dict[str, Any]:
     """Formats a notification for Google Chat in card format."""
     ticket_id = log_entry["ticket_id"]
-    url = f"https://app.securiti.ai/#/ticket-details/{ticket_id}?tab=WORKLIST"
+    url = f"{GLOBAL_SECURITI_URL}/#/ticket-details/{ticket_id}?tab=WORKLIST"
 
     return {
         "cards": [

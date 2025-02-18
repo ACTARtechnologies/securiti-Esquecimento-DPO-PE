@@ -471,7 +471,7 @@ def main(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "statusCode": 200,
             "body": json.dumps(
                 {
-                    "message": "All subtasks processed with notifications sent for failures.",
+                    "message": "All subtasks processed successfully.",
                     "dsr_id": data_dsr["ticketId"],
                 }
             ),
